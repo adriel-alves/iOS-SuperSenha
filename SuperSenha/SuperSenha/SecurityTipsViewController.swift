@@ -17,7 +17,7 @@ class SecurityTipsViewController: UIViewController {
     }
     
     @IBAction func close(_ sender: Any) {
-        dismiss(animated: true, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
+        dismiss(animated: true, completion: nil)
     }
     
 }

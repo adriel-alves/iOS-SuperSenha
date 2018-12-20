@@ -19,16 +19,32 @@ class PasswordsViewController: UIViewController {
     var useCapitalLetters: Bool!
     var useSpecialChars: Bool!
     
+    var passwordGenerator: PasswordGenerator!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Total de Senhas: \(numberOfPasswords)"
+        passwordGenerator = PasswordGenerator(numberOfCharacter: numberOfCharacters, useLetters: useLetters, useNumbers: useNumbers, useCapitalLetters: useCapitalLetters, useSpecialChars: useSpecialChars)
+        
+        generate()
 
     }
     
-    @IBAction func generate(_ sender: Any) {
+    func generate() {
+        
+        tfPasswords.text = ""
+        tfPasswords.scrollRangeToVisible(NSRange(location: 0, length: 0))
+        
+        let passwords = passwordGenerator.generate(total: numberOfPasswords)
+        for password in passwords {
+            tfPasswords.text.append(password + "\n\n")
+        }
         
     }
     
-    
+    @IBAction func generate(_ sender: Any) {
+        generate()
+    }
 
 }

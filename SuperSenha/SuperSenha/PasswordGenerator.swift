@@ -31,32 +31,42 @@ class PasswordGenerator {
         
     }
     
+    let letters = "abcdefghijklmnopqrstuvwxyz"
+    let symbols = "˜`!@#$%ˆ&*()-_=+:;}]{['<>,.?/|"
+    let numbers = "0123456789"
+    
     func generate(total: Int) -> [String] {
         
         passwords.removeAll()
-        var universe: CharacterSet
+        var universe: String = ""
         
         if useLetters {
-            universe = NSCharacterSet.alphanumerics
+            universe += letters
         }
         
         if useNumbers {
-            universe = universe.union(NSCharacterSet.alphanumerics)
+            universe += numbers
         }
 
         if useSpecialChars {
-            universe = universe.union(NSCharacterSet.symbols)
+            universe += symbols
         }
 
         if useCapitalLetters {
-            universe = universe.union(NSCharacterSet.capitalizedLetters)
-        }
-       
-        
-        for _ in 1...numberOfCharacter {
-         
+            universe += letters.uppercased()
         }
         
+        let universeArray = Array(universe)
+        
+        while passwords.count < total {
+            var password: String = ""
+            for _ in 1...numberOfCharacter {
+                
+                let index: Int = Int(arc4random_uniform(UInt32(universeArray.count)))
+                password += String (universeArray[index])
+            }
+            passwords.append(password)
+        }
         return passwords
         
     }
